@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestAddStudent {
     public static StudentXMLRepository repo;
-    public static StudentValidator validator;
+    public static StudentValidator validator = new StudentValidator();
     public static Service service;
 
     public static void createFile(String filename) {
@@ -39,8 +39,7 @@ public class TestAddStudent {
     @BeforeEach
     public void setUp() {
         createFile("IO/test_add_student.xml");
-
-        validator = new StudentValidator();
+        
         repo = new StudentXMLRepository(validator, "IO/test_add_student.xml");
         service = new Service(repo, null, null);
     }
