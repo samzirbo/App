@@ -1,0 +1,6 @@
+Tema: 1
+Nota: 6.5
+Predata in saptamana: 8
+Deadline: 7
+Feedback: bravisimo
+
