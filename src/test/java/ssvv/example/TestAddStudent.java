@@ -19,13 +19,12 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestAddStudent {
-    private StudentXMLRepository repo;
-    private StudentValidator validator;
-    private Service service;
+    public static StudentXMLRepository repo;
+    public static StudentValidator validator;
+    public static Service service;
 
-    @BeforeAll
-    static void createXMLFile() {
-        File file = new File("IO/test_add_student.xml");
+    public static void createFile(String filename) {
+        File file = new File(filename);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
                     "<inbox>\n" +
@@ -39,15 +38,17 @@ public class TestAddStudent {
         }
     }
 
-    @BeforeEach
-    void setup() {
-        this.validator = new StudentValidator();
-        this.repo = new StudentXMLRepository(validator, "IO/test_add_student.xml");
-        this.service = new Service(this.repo, null, null);
+    @BeforeAll
+    public static void setUp() {
+        createFile("IO/test_add_student.xml");
+
+        validator = new StudentValidator();
+        repo = new StudentXMLRepository(validator, "IO/test_add_student.xml");
+        service = new Service(repo, null, null);
     }
 
     @AfterAll
-    static void removeXML() {
+    public static void cleanUp() {
         File file = new File("IO/test_add_student.xml");
         if (file.exists()) {
             file.delete();
@@ -59,7 +60,7 @@ public class TestAddStudent {
         int result = service.saveStudent("2", "Maria", 935);
         assertEquals(1, result);
         Student student = new Student(null, "George", 935);
-        assertThrows(ValidationException.class, () -> this.validator.validate(student));
+        assertThrows(ValidationException.class, () -> validator.validate(student));
     }
 
     @Test
