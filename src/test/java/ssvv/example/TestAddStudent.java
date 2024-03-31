@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -126,7 +127,8 @@ public class TestAddStudent {
     @Test
     public void testGroupZero() {
         Student student = new Student("id5", "maria", 0);
-        assertThrows(ValidationException.class, () -> validator.validate(student));
+//        assertThrows(ValidationException.class, () -> validator.validate(student));
+        assertTrue(false);
     }
 
 
