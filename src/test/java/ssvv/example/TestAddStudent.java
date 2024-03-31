@@ -1,10 +1,7 @@
 package ssvv.example;
 
 import domain.Student;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import repository.StudentXMLRepository;
 import service.Service;
 import validation.StudentValidator;
@@ -16,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestAddStudent {
@@ -38,8 +36,8 @@ public class TestAddStudent {
         }
     }
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         createFile("IO/test_add_student.xml");
 
         validator = new StudentValidator();
@@ -47,30 +45,91 @@ public class TestAddStudent {
         service = new Service(repo, null, null);
     }
 
-    @AfterAll
-    public static void cleanUp() {
+    @AfterEach
+    public void cleanUp() {
         File file = new File("IO/test_add_student.xml");
         if (file.exists()) {
             file.delete();
         }
     }
 
+    // Test case 1
     @Test
-    public void testValidation() {
-        int result = service.saveStudent("2", "Maria", 935);
+    public void testAllValidInputs() {
+        Student student = new Student("id1", "maria", 935);
+        assertDoesNotThrow(() -> validator.validate(student));
+
+        int result = service.saveStudent("id1", "maria", 935);
         assertEquals(1, result);
-        Student student = new Student(null, "George", 935);
+    }
+
+    // Test case 2
+    @Test
+    public void testEmptyID() {
+        Student student = new Student("", "maria", 935);
         assertThrows(ValidationException.class, () -> validator.validate(student));
     }
 
+    // Test case 3
     @Test
-    public void testService() {
-        int result = service.saveStudent("1", "Andrei", 935);
-        assertEquals(1, result);
-        result = service.saveStudent("1", "Sam", 937);
-        assertEquals(0, result);
-
+    public void testNullID() {
+        Student student = new Student(null, "", 935);
+        assertThrows(ValidationException.class, () -> validator.validate(student));
     }
+
+    // Test case 4
+    @Test
+    public void testIDAlreadyExists() {
+        Student student = new Student("id1", "maria", 935);
+        assertDoesNotThrow(() -> validator.validate(student));
+
+        int result = service.saveStudent("id1", "maria", 935);
+        assertEquals(1, result);
+
+        Student student2 = new Student("id1", "maria", 935);
+        assertDoesNotThrow(() -> validator.validate(student2));
+
+        result = service.saveStudent("id1", "maria", 935);
+        assertEquals(0, result);
+    }
+
+    // Test case 5
+    @Test
+    public void testEmptyName() {
+        Student student = new Student("id2", "", 935);
+        assertThrows(ValidationException.class, () -> validator.validate(student));
+    }
+
+    // Test case 6
+    @Test
+    public void testNameNull() {
+        Student student = new Student("id3", null, 935);
+        assertThrows(ValidationException.class, () -> validator.validate(student));
+    }
+
+    // Test case 7
+    @Test
+    public void testGroupTooBig() {
+        Student student = new Student("id4", "maria", 1000);
+        assertThrows(ValidationException.class, () -> validator.validate(student));
+    }
+
+    // Test case 8
+    @Test
+    public void testGroupNegative() {
+        Student student = new Student("id5", "maria", -935);
+        assertThrows(ValidationException.class, () -> validator.validate(student));
+    }
+
+    // Test case 9
+    @Test
+    public void testGroupZero() {
+        Student student = new Student("id5", "maria", 0);
+        assertThrows(ValidationException.class, () -> validator.validate(student));
+    }
+
+
+
 
 
 
