@@ -55,6 +55,7 @@ public class TestAddStudent {
     // Test case 1
     @Test
     public void testAllValidInputs() {
+        setUp();
         Student student = new Student("id1", "maria", 935);
         assertDoesNotThrow(() -> validator.validate(student));
 
@@ -79,6 +80,7 @@ public class TestAddStudent {
     // Test case 4
     @Test
     public void testIDAlreadyExists() {
+        setUp();
         Student student = new Student("id1", "maria", 935);
         assertDoesNotThrow(() -> validator.validate(student));
 
