@@ -127,8 +127,7 @@ public class TestAddStudent {
     @Test
     public void testGroupZero() {
         Student student = new Student("id5", "maria", 0);
-//        assertThrows(ValidationException.class, () -> validator.validate(student));
-        assertTrue(false);
+        assertThrows(ValidationException.class, () -> validator.validate(student));
     }
 
 
