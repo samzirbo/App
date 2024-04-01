@@ -87,5 +87,35 @@ public class TestAddAssignment {
         assertThrows(ValidationException.class, () -> validatorAssignment.validate(tema));
     }
 
+    // Test case 3
+    @Test
+    public void testDescriereEmpty() {
+        setUp();
+        Tema tema = new Tema("11", "", 10, 8);
+        assertThrows(ValidationException.class, () -> validatorAssignment.validate(tema));
+    }
+
+    // Test case 4
+    @Test
+    public void testDeadlineNotInt() {
+        String deadline = "abc";
+        assertThrows(NumberFormatException.class, () -> Integer.parseInt(deadline));
+    }
+
+    // Test case 5
+    @Test
+    public void testStartlineNotInt() {
+        String startline = "abc";
+        assertThrows(NumberFormatException.class, () -> Integer.parseInt(startline));
+    }
+
+    // Test case 6
+    @Test
+    public void testStartlineGreaterThanDeadline() {
+        setUp();
+        Tema tema = new Tema("14", "descr1", 8, 10);
+        assertThrows(ValidationException.class, () -> validatorAssignment.validate(tema));
+    }
+
 
 }
