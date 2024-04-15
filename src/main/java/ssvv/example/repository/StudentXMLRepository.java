@@ -1,6 +1,6 @@
-package repository;
-import domain.Student;
-import validation.Validator;
+package ssvv.example.repository;
+import ssvv.example.domain.Student;
+import ssvv.example.validation.Validator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

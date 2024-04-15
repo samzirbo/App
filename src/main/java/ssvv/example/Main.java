@@ -1,10 +1,21 @@
 package ssvv.example;
 
-import console.*;
-import domain.*;
-import repository.*;
-import service.*;
-import validation.*;
+import ssvv.example.console.*;
+import ssvv.example.domain.*;
+import ssvv.example.repository.*;
+import ssvv.example.service.*;
+import ssvv.example.console.UI;
+import ssvv.example.domain.Nota;
+import ssvv.example.domain.Student;
+import ssvv.example.domain.Tema;
+import ssvv.example.repository.NotaXMLRepository;
+import ssvv.example.repository.StudentXMLRepository;
+import ssvv.example.repository.TemaXMLRepository;
+import ssvv.example.service.Service;
+import ssvv.example.validation.NotaValidator;
+import ssvv.example.validation.StudentValidator;
+import ssvv.example.validation.TemaValidator;
+import ssvv.example.validation.Validator;
 
 public class Main {
     public static void main(String[] args) {

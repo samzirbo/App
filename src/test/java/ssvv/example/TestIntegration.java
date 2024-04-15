@@ -1,10 +1,17 @@
 package ssvv.example;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import ssvv.example.domain.Nota;
+import ssvv.example.domain.Pair;
+import ssvv.example.domain.Student;
 import ssvv.example.domain.Tema;
-import org.junit.jupiter.api.*;
+import ssvv.example.repository.NotaRepository;
 import ssvv.example.repository.StudentXMLRepository;
 import ssvv.example.repository.TemaXMLRepository;
 import ssvv.example.service.Service;
+import ssvv.example.validation.NotaValidator;
 import ssvv.example.validation.StudentValidator;
 import ssvv.example.validation.TemaValidator;
 import ssvv.example.validation.ValidationException;
@@ -15,15 +22,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestAddAssignment {
+public class TestIntegration {
     public static StudentXMLRepository repoStudent;
     public static StudentValidator validatorStudent = new StudentValidator();
     public static TemaXMLRepository repoTema;
     public static TemaValidator validatorAssignment = new TemaValidator();
+    public static NotaRepository repoNota;
+    public static NotaValidator validatorNota = new NotaValidator();
     public static Service service;
 
     public static void createFile(String filename) {
@@ -50,11 +58,12 @@ public class TestAddAssignment {
 
     @BeforeEach
     public void setUp() {
-        createFile("IO/test_add_assignment_student.xml");
-        createFile("IO/test_add_assignment_assignment.xml");
+        createFile("IO/test_integration_student.xml");
+        createFile("IO/test_integration_assignment.xml");
 
-        repoStudent = new StudentXMLRepository(validatorStudent, "IO/test_add_assignment_student.xml");
-        repoTema = new TemaXMLRepository(validatorAssignment, "IO/test_add_assignment_assignment.xml");
+        repoStudent = new StudentXMLRepository(validatorStudent, "IO/test_integration_student.xml");
+        repoTema = new TemaXMLRepository(validatorAssignment, "IO/test_integration_assignment.xml");
+        repoNota = new NotaRepository(validatorNota);
 
         service = new Service(repoStudent, repoTema, null);
     }
@@ -63,24 +72,21 @@ public class TestAddAssignment {
 
     @AfterEach
     public void cleanUp() {
-        deleteFile("IO/test_add_assignment_student.xml");
-        deleteFile("IO/test_add_assignment_assignment.xml");
+        deleteFile("IO/test_integration_student.xml");
+        deleteFile("IO/test_integration_assignment.xml");
     }
 
     // Test case 1
     @Test
-    public void testAllValidInputs() {
+    public void testAddStudent() {
         setUp();
-        Tema tema = new Tema("10", "descr1", 10, 8);
-        assertDoesNotThrow(() -> validatorAssignment.validate(tema));
-
-        int result = service.saveTema("10", "descr1", 10, 8);
-        assertEquals(1, result);
+        Student student = new Student("", "maria", 935);
+        assertThrows(ValidationException.class, () -> validatorStudent.validate(student));
     }
 
     // Test case 2
     @Test
-    public void testEmptyID() {
+    public void testAddAssignment() {
         setUp();
         Tema tema = new Tema("", "descr1", 10, 8);
         assertThrows(ValidationException.class, () -> validatorAssignment.validate(tema));
@@ -88,32 +94,11 @@ public class TestAddAssignment {
 
     // Test case 3
     @Test
-    public void testDescriereEmpty() {
+    public void testAddGrade() {
         setUp();
-        Tema tema = new Tema("11", "", 10, 8);
-        assertThrows(ValidationException.class, () -> validatorAssignment.validate(tema));
-    }
+        Nota nota = new Nota(new Pair("1", "1"), 11, 10, "feedback");
+        assertThrows(ValidationException.class, () -> validatorNota.validate(nota));
 
-    // Test case 4
-    @Test
-    public void testDeadlineNotInt() {
-        String deadline = "abc";
-        assertThrows(NumberFormatException.class, () -> Integer.parseInt(deadline));
-    }
-
-    // Test case 5
-    @Test
-    public void testStartlineNotInt() {
-        String startline = "abc";
-        assertThrows(NumberFormatException.class, () -> Integer.parseInt(startline));
-    }
-
-    // Test case 6
-    @Test
-    public void testStartlineGreaterThanDeadline() {
-        setUp();
-        Tema tema = new Tema("14", "descr1", 8, 10);
-        assertThrows(ValidationException.class, () -> validatorAssignment.validate(tema));
     }
 
 

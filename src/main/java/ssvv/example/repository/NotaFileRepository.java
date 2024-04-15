@@ -1,6 +1,10 @@
-package repository;
-import domain.*;
-import validation.*;
+package ssvv.example.repository;
+import ssvv.example.domain.*;
+import ssvv.example.domain.Nota;
+import ssvv.example.domain.Pair;
+import ssvv.example.validation.ValidationException;
+import ssvv.example.validation.Validator;
+import ssvv.example.validation.*;
 
 import java.io.*;
 import java.util.stream.Collectors;

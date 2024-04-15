@@ -1,4 +1,4 @@
-package domain;
+package ssvv.example.domain;
 
 public class Nota implements HasID<Pair<String, String>> {
     Pair<String, String> idNota;

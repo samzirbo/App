@@ -1,4 +1,4 @@
-package domain;
+package ssvv.example.domain;
 
 public interface HasID<ID> {
     ID getID();

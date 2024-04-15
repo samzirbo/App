@@ -1,7 +1,10 @@
-package repository;
+package ssvv.example.repository;
 
-import domain.*;
-import validation.*;
+import ssvv.example.domain.*;
+import ssvv.example.domain.HasID;
+import ssvv.example.validation.ValidationException;
+import ssvv.example.validation.Validator;
+import ssvv.example.validation.*;
 
 import java.util.HashMap;
 import java.util.Map;

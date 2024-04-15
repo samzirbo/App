@@ -1,5 +1,5 @@
-package validation;
-import domain.Nota;
+package ssvv.example.validation;
+import ssvv.example.domain.Nota;
 
 public class NotaValidator implements Validator<Nota> {
     public void validate(Nota nota) throws ValidationException {

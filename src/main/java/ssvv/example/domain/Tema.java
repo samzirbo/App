@@ -1,4 +1,4 @@
-package domain;
+package ssvv.example.domain;
 
 import java.util.Objects;
 

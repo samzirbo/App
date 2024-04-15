@@ -1,7 +1,14 @@
-package service;
+package ssvv.example.service;
 
-import domain.*;
-import repository.*;
+import ssvv.example.domain.*;
+import ssvv.example.repository.*;
+import ssvv.example.domain.Nota;
+import ssvv.example.domain.Pair;
+import ssvv.example.domain.Student;
+import ssvv.example.domain.Tema;
+import ssvv.example.repository.NotaXMLRepository;
+import ssvv.example.repository.StudentXMLRepository;
+import ssvv.example.repository.TemaXMLRepository;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;

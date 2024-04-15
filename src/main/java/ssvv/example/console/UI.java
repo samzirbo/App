@@ -1,7 +1,10 @@
-package console;
+package ssvv.example.console;
 
-import domain.*;
-import service.Service;
+import ssvv.example.domain.*;
+import ssvv.example.service.Service;
+import ssvv.example.domain.Nota;
+import ssvv.example.domain.Student;
+import ssvv.example.domain.Tema;
 
 import java.util.Scanner;
 

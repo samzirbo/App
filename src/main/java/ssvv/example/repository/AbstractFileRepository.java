@@ -1,8 +1,8 @@
-package repository;
+package ssvv.example.repository;
 
-import domain.HasID;
-import validation.ValidationException;
-import validation.Validator;
+import ssvv.example.domain.HasID;
+import ssvv.example.validation.ValidationException;
+import ssvv.example.validation.Validator;
 
 public abstract class AbstractFileRepository<ID, E extends HasID<ID>> extends AbstractCRUDRepository<ID,E>{
     protected String filename;

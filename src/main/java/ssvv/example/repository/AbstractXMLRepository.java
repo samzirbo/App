@@ -1,8 +1,8 @@
-package repository;
+package ssvv.example.repository;
 
-import domain.HasID;
-import validation.ValidationException;
-import validation.Validator;
+import ssvv.example.domain.HasID;
+import ssvv.example.validation.ValidationException;
+import ssvv.example.validation.Validator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
